@@ -7,17 +7,22 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Slf4j
 @Controller
 @RequestMapping("/design")
+@SessionAttributes("order")
 public class DesignTacoController {
 
   private final IngredientRepository ingredientRepo;
@@ -44,8 +49,14 @@ public class DesignTacoController {
   }
 
   @PostMapping
-  public String processDesign(Taco design){
-    log.info("Processing design: " + design);
+  public String processDesign(@Valid Taco design, Errors errors,
+      @ModelAttribute Order order){
+    if (errors.hasErrors()){
+      return "design";
+    }
+
+    Taco saved = designRepo.save(design);
+    order.addDesign(saved);
     return "redirect:/orders/current";
   }
 
