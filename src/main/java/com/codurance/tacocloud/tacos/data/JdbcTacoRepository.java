@@ -3,6 +3,7 @@ package com.codurance.tacocloud.tacos.data;
 import com.codurance.tacocloud.tacos.Ingredient;
 import com.codurance.tacocloud.tacos.Taco;
 import java.sql.Timestamp;
+import java.sql.Types;
 import java.util.Arrays;
 import java.util.Date;
 import org.springframework.jdbc.core.JdbcTemplate;
