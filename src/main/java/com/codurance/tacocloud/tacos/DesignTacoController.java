@@ -2,6 +2,7 @@ package com.codurance.tacocloud.tacos;
 
 import com.codurance.tacocloud.tacos.Ingredient.Type;
 import com.codurance.tacocloud.tacos.data.IngredientRepository;
+import com.codurance.tacocloud.tacos.data.TacoRepository;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,10 +21,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class DesignTacoController {
 
   private final IngredientRepository ingredientRepo;
+  private TacoRepository designRepo;
 
   @Autowired
-  public DesignTacoController(IngredientRepository ingredientRepo) {
+  public DesignTacoController(IngredientRepository ingredientRepo, TacoRepository designRepo) {
     this.ingredientRepo = ingredientRepo;
+    this.designRepo = designRepo;
   }
 
   @GetMapping
