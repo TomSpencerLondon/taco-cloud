@@ -1,13 +1,13 @@
-package com.codurance.tacocloud;
-
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-
-@SpringBootTest
-class TacoCloudApplicationTests {
-
-	@Test
-	void contextLoads() {
-	}
-
-}
+//package com.codurance.tacocloud;
+//
+//import org.springframework.boot.test.context.SpringBootTest;
+//
+//@SpringBootTest
+//class TacoCloudApplicationTests {
+//
+//	@Test
+//	void contextLoads() {
+//	}
+//
+//
+//}

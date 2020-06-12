@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-@Slf4j
 @Controller
 @RequestMapping("/design")
 @SessionAttributes("order")
@@ -34,20 +33,6 @@ public class DesignTacoController {
     this.designRepo = designRepo;
   }
 
-  @GetMapping
-  public String showDesignForm(Model model) {
-    List<Ingredient> ingredients = new ArrayList<>();
-    ingredientRepo.findAll().forEach(i -> ingredients.add(i));
-
-    Type[] types = Ingredient.Type.values();
-    for (Type type : types) {
-      model.addAttribute(type.toString().toLowerCase(), filterByType(ingredients, type));
-    }
-    model.addAttribute("design", new Taco());
-
-    return "design";
-  }
-
   @ModelAttribute(name = "order")
   public Order order(){
     return new Order();
@@ -58,6 +43,21 @@ public class DesignTacoController {
     return new Taco();
   }
 
+  @GetMapping
+  public String showDesignForm(Model model) {
+    List<Ingredient> ingredients = new ArrayList<>();
+    ingredientRepo.findAll().forEach(i -> ingredients.add(i));
+
+    Type[] types = Ingredient.Type.values();
+    for (Type type : types) {
+      model.addAttribute(type.toString().toLowerCase(),
+          filterByType(ingredients, type));
+    }
+
+    return "design";
+  }
+
+
   @PostMapping
   public String processDesign(@Valid Taco design, Errors errors,
       @ModelAttribute Order order){
@@ -67,6 +67,7 @@ public class DesignTacoController {
 
     Taco saved = designRepo.save(design);
     order.addDesign(saved);
+
     return "redirect:/orders/current";
   }
 
